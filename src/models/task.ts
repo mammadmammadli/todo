@@ -1,4 +1,5 @@
 export interface ITask {
+  id: number;
   title: string;
   description: string;
   priority: "HIGH" | "MEDIUM" | "LOW";

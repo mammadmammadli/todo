@@ -1,28 +1,34 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form, Icon, List, Message, Segment } from 'semantic-ui-react';
-import { createTask } from '../../actions/tasks';
-import { IApplicationState } from '../../models';
+import { createTask, updateTask } from '../../actions/tasks';
+import { IApplicationState, TStatuses } from '../../models';
 import { ITask } from '../../models/task';
 import { filterOptions, mapStatusToText, priorityWeight, statusWeight } from '../../utils';
 import { CreateTask } from './CreateTask';
 import './index.scss';
 
+type TFilter = 'priority' | 'date' | 'status';
+
 export const Tasks = () => {
   const [isCreateModalOpen, toggleCreateModal] = React.useState(false);
-  const [filter, setFilter] = React.useState<string>()
+  const [filter, setFilter] = React.useState<TFilter>('priority')
   const dispatch = useDispatch()
+  const { list } = useSelector((state: IApplicationState) => state.tasks);
 
   const handleCreateNewTask = (values: ITask) => {
     const newData: ITask = {
       ...values,
+      id: list.length,
       status: 'TODO',
     }
     dispatch(createTask(newData));
     toggleCreateModal(false);
   }
 
-  const { list } = useSelector((state: IApplicationState) => state.tasks);
+  const handleTaskStatusChange = (id: number, status: TStatuses) => {
+    dispatch(updateTask(id, status))
+  }
 
   const filterAction = React.useCallback(() => {
     return list.sort((first, second) => {
@@ -43,14 +49,14 @@ export const Tasks = () => {
       if (a < b) return 1;
       return 0;
     })
-  }, [filter])
+  }, [filter, list])
 
   const filteredList = filterAction()
 
   return (
     <div>
       <div className='page__title'>
-        <h1>List</h1>
+        <h1>Todo List</h1>
       </div>
       <div className="d-flex v-center space-between">
         <Form>
@@ -59,7 +65,7 @@ export const Tasks = () => {
               fluid
               options={filterOptions}
               placeholder='Filter'
-              onChange={(_, { value }) => setFilter(value as string)}
+              onChange={(_, { value }) => setFilter(value as TFilter)}
             />
           </Form.Group>
         </Form>
@@ -81,6 +87,7 @@ export const Tasks = () => {
       <Segment>
         <List divided relaxed>
           {filteredList.length > 0 ? filteredList.map(({
+            id,
             description,
             deadline,
             priority,
@@ -115,14 +122,30 @@ export const Tasks = () => {
                     <div className="d-flex h-v-center">
                       {mapStatusToText(status)}
                     </div>
-                    <div>
-                      <p>Start date: {startDate}</p>
-                      <p>Deadline: {deadline}</p>
+                    <div className='d-flex h-v-center'>
+                      <div>
+                        <p>Start date: {startDate}</p>
+                        <p>Deadline: {deadline}</p>
+                      </div>
                     </div>
                     <div className='d-flex v-center h-right'>
-                      <select>
-                        <option value="">Las</option>
-                      </select>
+                      <Form>
+                        <Form.Group widths='equal'>
+                          <Form.Select
+                            fluid
+                            options={[
+                              { key: 't', text: 'Todo', value: 'TODO' },
+                              { key: 'i', text: 'In progress', value: 'IN_PROGRESS' },
+                              { key: 'd', text: 'Done', value: 'DONE' },
+                            ]}
+                            value={status}
+                            placeholder='Filter'
+                            onChange={(_, { value }) => {
+                              handleTaskStatusChange(id, value as TStatuses)
+                            }}
+                          />
+                        </Form.Group>
+                      </Form>
                     </div>
                   </Message>
                 </List.Content>
