@@ -35,6 +35,12 @@ export const priorities: Array<{
   { key: "high", value: "HIGH", text: "High" },
 ];
 
+export const filterOptions = [
+  { key: 'd', text: 'Date', value: 'date' },
+  { key: 'p', text: 'Priority', value: 'priority' },
+  { key: 's', text: 'Status', value: 'status' },
+]
+
 export const mapStatusToText = (status: TStatuses): string => {
   if (status === 'DONE') {
     return 'Done'
@@ -46,3 +52,15 @@ export const mapStatusToText = (status: TStatuses): string => {
 
   return '';
 } 
+
+export const statusWeight = {
+  'DONE': 0,
+  'IN_PROGRESS': 1,
+  'TODO': 2,
+};
+
+export const priorityWeight = {
+  'LOW': 0,
+  'MEDIUM': 1,
+  'HIGH': 2,
+};
