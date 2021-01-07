@@ -9,3 +9,24 @@
     }
   }
 }
+
+.list {
+  &__item {
+    &__content {
+      display: flex;
+      justify-content: space-between;
+
+      > div {
+        width: 20%;
+
+        &:not(:first-child) {
+          text-align: center;
+        }
+
+        &:last-child {
+          text-align: right;
+        }
+      }
+    }
+  }
+}

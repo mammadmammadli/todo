@@ -8,3 +8,5 @@ export interface IAction<T> {
 export interface IApplicationState {
   tasks: { list: ITask[] }
 }
+
+export type TStatuses = 'TODO' | 'DONE' | 'IN_PROGRESS'

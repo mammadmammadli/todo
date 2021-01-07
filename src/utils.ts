@@ -1,5 +1,6 @@
 import { applyMiddleware, compose, createStore } from "redux";
 import createSagaMiddleware from "redux-saga";
+import { TStatuses } from "./models";
 import rootSaga from "./saga";
 import { rootReducer } from "./store";
 
@@ -24,8 +25,24 @@ export const store = () => {
   return store;
 };
 
-export const priorities = [
-  { key: "low", value: "low", text: "Low" },
-  { key: "medium", value: "medium", text: "Medium" },
-  { key: "high", value: "high", text: "High" },
+export const priorities: Array<{
+  key: string,
+  value: string,
+  text: string
+}> = [
+  { key: "low", value: "LOW", text: "Low" },
+  { key: "medium", value: "MEDIUM", text: "Medium" },
+  { key: "high", value: "HIGH", text: "High" },
 ];
+
+export const mapStatusToText = (status: TStatuses): string => {
+  if (status === 'DONE') {
+    return 'Done'
+  } else if (status === 'IN_PROGRESS') {
+    return 'In progress';
+  } else if (status === 'TODO') {
+    return 'To-do';
+  }
+
+  return '';
+} 

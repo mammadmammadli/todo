@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Icon, List, Segment } from 'semantic-ui-react';
+import { Button, Icon, List, Message, Segment } from 'semantic-ui-react';
 import { createTask } from '../../actions/tasks';
 import { IApplicationState } from '../../models';
 import { ITask } from '../../models/task';
+import { mapStatusToText } from '../../utils';
 import { CreateTask } from './CreateTask';
 
 import './index.scss';
@@ -13,12 +14,17 @@ export const Tasks = () => {
   const dispatch = useDispatch()
 
   const handleCreateNewTask = (values: ITask) => {
-    dispatch(createTask(values));
+    const newData: ITask = {
+      ...values,
+      status: 'TODO',
+    }
+    dispatch(createTask(newData));
     toggleCreateModal(false);
   }
 
-  const tasksbranch = useSelector((state: IApplicationState) => state.tasks);
+  const { list } = useSelector((state: IApplicationState) => state.tasks);
 
+  console.log(list)
   return (
     <div>
       <div className='page__title'>
@@ -40,23 +46,57 @@ export const Tasks = () => {
       />
       <Segment>
         <List divided relaxed>
-          <List.Item>
-            <List.Content>
-              <List.Header>Snickerdoodle</List.Header>
-              An excellent companion
-            </List.Content>
-          </List.Item>
-          <List.Item>
-            <List.Content>
-              <List.Header>Poodle</List.Header>A poodle, its pretty basic
-        </List.Content>
-          </List.Item>
-          <List.Item>
-            <List.Content>
-              <List.Header>Paulo</List.Header>
-          He's also a dog
-        </List.Content>
-          </List.Item>
+          {list.length > 0 ? list.map(({
+            description,
+            deadline,
+            priority,
+            responsibleUser,
+            startDate,
+            status,
+            title,
+          }) => {
+            const listType: any = {}
+            if (priority === 'LOW') {
+              listType['info'] = true;
+            } else if (priority === 'HIGH') {
+              listType['negative'] = true;
+            } else {
+              listType['warning'] = true;
+            }
+
+            return (
+              <List.Item>
+                <List.Content>
+                  <Message
+                    className="list__item__content"
+                    {...listType}
+                  >
+                    <div>
+                      <Message.Header>{title} &mdash; {responsibleUser}</Message.Header>
+                      <p>{description}</p>
+                    </div>
+                    <div className="d-flex h-v-center">
+                      {priority}
+                    </div>
+                    <div className="d-flex h-v-center">
+                      {mapStatusToText(status)}
+                    </div>
+                    <div>
+                      <p>Start date: {startDate}</p>
+                      <p>Deadline: {deadline}</p>
+                    </div>
+                    <div className='d-flex v-center h-right'>
+                      <select>
+                        <option value="">Las</option>
+                      </select>
+                    </div>
+                  </Message>
+                </List.Content>
+              </List.Item>
+            )
+          }) : (
+              <div>not found</div>
+            )}
         </List>
       </Segment>
     </div>

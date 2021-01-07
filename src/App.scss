@@ -7,8 +7,29 @@
 
   &__container {
     padding: 32px;
-    width: 50%;
+    width: 80%;
     background-color: white;
     box-shadow: inset 0px -1px 0px #EDEFED;
   }
+}
+
+.d-flex {
+  display: flex;
+}
+
+.h-v-center {
+  justify-content: center;
+  align-items: center;
+}
+
+.h-center {
+  justify-content: center;
+}
+
+.h-right {
+  justify-content: flex-end;
+}
+
+.v-center {
+  align-items: center;
 }

@@ -80,7 +80,7 @@ export const CreateTask = ({ isOpen, onCloce, onSubmit }: IProps): React.ReactEl
                 <Form.Field>
                   <label >Users</label>
                   <select
-                    name="priority"
+                    name="reponsibleUser"
                     ref={register}
                   >
                     <option value={'me'}>Memo</option>
