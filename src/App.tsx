@@ -1,13 +1,13 @@
 import * as React from 'react';
-import './App.css';
-import { Button } from 'semantic-ui-react';
+import './App.scss';
+import { Tasks } from './modules/Tasks';
 
 function App() {
   return (
-    <div className="App">
-      <Button>
-        hello
-      </Button>
+    <div className="app">
+      <div className="app__container">
+        <Tasks />
+      </div>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { applyMiddleware, compose, createStore } from "redux";
 import createSagaMiddleware from "redux-saga";
+import rootSaga from "./saga";
 import { rootReducer } from "./store";
 
 export const store = () => {
@@ -18,6 +19,13 @@ export const store = () => {
     undefined,
     composeEnhancers(middlewareEnhancer)
   );
+  sagaMiddleware.run(rootSaga);
 
   return store;
 };
+
+export const priorities = [
+  { key: "low", value: "low", text: "Low" },
+  { key: "medium", value: "medium", text: "Medium" },
+  { key: "high", value: "high", text: "High" },
+];

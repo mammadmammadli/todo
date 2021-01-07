@@ -8,14 +8,10 @@ import 'semantic-ui-css/semantic.min.css'
 import { Provider } from 'react-redux';
 import { store } from './utils';
 
-
-
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store()}>
-      <App />
-    </Provider>
-  </React.StrictMode>,
+  <Provider store={store()}>
+    <App />
+  </Provider>,
   document.getElementById('root')
 );
 

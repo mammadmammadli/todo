@@ -1,0 +1,11 @@
+.page {
+  &__title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    span {
+      font-size: 40px;
+    }
+  }
+}

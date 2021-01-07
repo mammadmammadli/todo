@@ -1,0 +1,14 @@
+.app {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+  background-color: #fafafa;
+  height: 100vh;
+
+  &__container {
+    padding: 32px;
+    width: 50%;
+    background-color: white;
+    box-shadow: inset 0px -1px 0px #EDEFED;
+  }
+}
