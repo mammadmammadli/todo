@@ -82,4 +82,16 @@ export const mockTasks: ITask[] = [
     status: "IN_PROGRESS",
     title: "lmaoo",
   },
+  {
+    id: 7,
+    deadline: "2021-07-07",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil, rerum quos nemo laudantium sapiente perspiciatis quibusdam dolorem quasi explicabo tenetur in provident officiis ex commodi velit nostrum deserunt aliquid nulla.",
+
+    priority: "HIGH",
+    responsibleUser: "Mammad",
+    startDate: "30.12.1998",
+    status: "IN_PROGRESS",
+    title: "lmaoo",
+  },
 ];
